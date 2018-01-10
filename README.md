@@ -1,89 +1,41 @@
-# Guide to Creating (and Publishing) Projects
+# Sprint 2: ROI of an Oscar Win
 
-![Photo](Gitmeme.png)
+12/7/17
 
-
-Each sprint in the course will involve creating a new project. This template includes two resources.
-1. Instructions on how to create your project locally and publish it to your personal github.
-1. A template for the information you want to share about your project (at the bottom below these instructions which you will eventually delete)
+**Author:** Runjini Murthy
 
 
-#### Creating the repository on your computer.
+__*Project Description:*__ Establish data models, create a SQL database from a set of CSV files, join tables, and query for films that have won an Oscar.
 
-1. On the right hand side of the screen click the green "Clone or download" drop down.
-2. Click "open in Desktop"
-  - You may get a pop up that asks if you want to open Github Desktop. You do.
-  - Your Github Desktop app will open
-  - It should take you to the URL Tab. Click the URL tab if it doesn't.
-3. Go to the section where it says "local path" click "choose" to select a folder on your computer where you would like your repository to be. i.e. Documents or Desktop.
-4. You should also change your folder name to your project's name. You can do that by editing the folder path.  For Example: /Users/victorialarson/Desktop/GitHub/__Tori_Project_1__
-5. Click "clone"
-  - This will clone your repository to your local computer and will rename it to your desired folder name.
 
-#### Setting up Your Project Repository on Your Personal Github Account.
-Since you will be pushing this folder to your own github website you will need to have a repository to place it into.
-1. Go to your personal github account - https//github.com/YourUsername
-2. In the top right hand corner click the __+__ sign
-3. Click "new repository"
-4. We will now make a repository name. We suggest using the same name as the project folder you created on your computer. ie Tori_Project_1.
+### Summary
+This exercise allows you to take CSV files, import them into SQL, use a GUI-interface like SQL Studio to set up data, and ultimately query.  I initially began by researching data sources for Oscar and movie information, with the intent of scraping data.  When that proved beyond the scope of the exercise, I copied and pasted the data in CSV and focused on building data models.  In this case, I built a database constructed of three tables: Movies, pre-Oscar box office results, and post-Oscar box office results.  Within the Movie table, I assigned a Movie_ID primary key.  This information also served as a foreign key in the other two tables, which allows for the join functionality in the query.
 
-    - __Note:__ this does not have to be the same as your local folder name but might make it easier to remember.
+Once the three tables were imported using SQL Studio, I reviewed the structure of each table by assigning appropriate data types (i.e. integers for IDs, text for names).  From this point, I researched queries to select, join, and filter data, which ultimately resulted in an output that returned only those movies that had won an Oscar, along with their pre- and post-Oscar weekend box office results.  Further queries/calculations will be needed to determine that monetary affect of an Oscar win.
 
-5. Click "create repository"
+### SQL Query to Join Tables
+```SQL
+SELECT Pre_Oscars.Weekend_Gross, Pre_Oscars.Theater_Count, Pre_Oscars.Average, Post_Oscars.Weekend_Gross, Post_Oscars.Theater_Count, Post_Oscars.Average, Movies.Name, Movies."Oscar Winner?"
+FROM Pre_Oscars
+INNER JOIN Post_Oscars on Post_Oscars.Movie_ID = Pre_Oscars.Movie_ID
+INNER JOIN Movies on Movies.ID = Pre_Oscars.Movie_ID
+WHERE Movies."Oscar Winner?" = 1
 
-  - No need to have a readme.md file. This one was created for you!
+```
 
-6. You will be taken to a page that says "Quicksetup - if you've done this kind of thing before"
-7. Underneath this heading you will see "HTTP" - on the right hand side click the copy to clipboard icon.
-8. Go back to your Github desktop app.
+### Key SQL Functions
+SELECT = choose column from
+FROM = table you are taking information from
+INNER JOIN = returning values based on matches between tables
+WHERE = conditional statement; helpful in filtering
 
-#### Linking your local folder and customized github repository
-1. In your github desktop task bar click on __repository > repository settings__. Under the "Remote" tab paste your personalized repository.
+### Helpful Links
+[SQLite training] (https://www.quackit.com/sqlite/tutorial/)
 
-      For Example:
-      https//github.com/ToriLarson/Tori_Project_1.git
+[More SQLite training] (http://www.sqlitetutorial.net/)
 
-2. Click "save"  
-2. You can now push the folder to your own personal github!
-2. In the top middle of the page click "fetch orgin"  
-3. Wait for it to load and then click "publish branch"
-4. This will publish your local work to your  github repository!
+[SQL Studio training] (https://wiki.sqlitestudio.pl/index.php/)
 
-__You did it! Good job!__
+[And even more SQLite training] (https://www.tutorialspoint.com/sqlite/)
 
-#### Making changes to your repository.
-You are now ready to make changes to your project.
-1. We have created a template for you at the bottom of this tutorial, so eventually you will delete these instructions __but not yet__.
-2. Open the README.md file in ATOM (or another editor).
-  - If you open in Atom you will be able to preview the Markdown text but pressing CTR+SHIFT+M.
-    - You can easily find the README.md file to open by clicking the link to "open this repository in finder" and then opening README.md in your text editor of choice.
-2. In the area below these instructions in README.md - fill in the blanks explaining your project ie title, date, author, and project description.
-3. Save your work!
-
-#### Publishing your changes
-
-3. Once you've filled in these areas (and deleted these instructions) you will be ready to commit and push your repository.
-4. Go to the Github desktop app and you will now see that your changes are being tracked (if you don't see any changes it is probably because you didn't save your work).
-  -  Words highlighted in red have been changed or deleted.
-  - Words highlighted in green are the changes.
-5. In the bottom left hand corner of the page type something in the "summary" section such as "test 1". You can also type information in the comments section, but you don't have to. You will then be able to commit the changes.
-6. Once the work is committed - go to the section in the top middle of the desktop app and click "push origin"
-7. Congratulations! you have pushed your edited repository to your github page! You can now go to your github site and look at your work online!
-
-#### Deleting these instructions
-8. Now is the time to delete these instructions in the README.md file. When that is complete push your changes to github. Now your project is published and you are ready to start adding in your project files!
-
-__Note:__ Below is the template you will be using for all of your projects. Just clone this repo every time you start a new one
-
-[comment]: <> (Template below here, you can delete this line and everything below it.)
-
-# Descriptive Title for your Project (Repo should have a similar name)
-
-**Author:** [Author Name Here]
-
-__*Project Description:*__
-*A description of the project and what it is intended to do*
-
-*A description of the files attached, and any instructions for someone downloading it to use*
-
-*Here is a description of other things I hope to do with this project for future reference*
+[Inner join vs. outer join] (https://www.diffen.com/difference/Inner_Join_vs_Outer_Join)
